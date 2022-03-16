@@ -1,5 +1,7 @@
 module Tools
 
+export print_fields
+
 """
     print_fields(x, l_max=500, padding=15, padfunc=lpad)
 

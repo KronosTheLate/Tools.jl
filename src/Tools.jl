@@ -40,4 +40,13 @@ function batch(v::AbstractVector, n_batches::Int, shuffle_input=false; check_eve
 end
 export batch
 
+"""
+    ⊕(args...) = 1/sum(x->1/x, args)
+
+Compute the reciprocal over sum of reciprocal.
+Can be used as infix operator.
+"""
+⊕(args...) = 1/sum(x->1/x, args)
+export ⊕
+
 end

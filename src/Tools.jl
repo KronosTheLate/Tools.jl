@@ -49,4 +49,10 @@ Can be used as infix operator.
 ⊕(args...) = 1/sum(x->1/x, args)
 export ⊕
 
+"""
+    tofn(x) = typeof(fieldnames(x))
+"""
+tofn(x) = typeof(fieldnames(x))
+export tofn
+
 end

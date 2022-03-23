@@ -1,6 +1,6 @@
 module Tools
 
-export print_fields
+# Exporting after each definition
 
 """
     print_fields(x, l_max=500, padding=15, padfunc=lpad)
@@ -15,5 +15,29 @@ function print_fields(x, l_max=500, padding=15, padfunc=lpad)
         println(padfunc("$field = ", padding) *  second_part)
     end
 end
+export print_fields
+
+"""
+    batch(v::AbstractVector, n_batches::Int, shuffle_pics=false; check_even=true, return_indices=false)
+
+Create a vector of `n_batches` vectors, containing all of `v`.
+"""
+function batch(v::AbstractVector, n_batches::Int, shuffle_input=false; check_even=true, return_indices=false)
+    @assert length(v) ≥ n_batches "Trying to make $n_batches batches from $(length(v)) elements. This would result in empty arrays of type `Any`, which is likely to cause problems."
+    shuffle_input  &&  (v = shuffle(v))
+    check_even  &&  length(v) % n_batches != 0   &&   @warn "Number of elements not divisible by number of batches. Batches will be uneven. Set `check_even` to false to silence this warning"
+    divs, rems = divrem(length(v), n_batches)
+    batchlengths = fill(divs, n_batches)
+    batchlengths[end-rems+1:end] .+= 1
+    
+    cumsums = pushfirst!(cumsum(batchlengths), 0)
+    ranges = [cumsums[i]+1:cumsums[i+1] for i in 1:n_batches]
+    if return_indices
+        return (ranges, getindex.([v], ranges))
+    else
+        return getindex.([v], ranges)
+    end
+end
+export batch
 
 end

@@ -50,9 +50,9 @@ Can be used as infix operator.
 export ⊕
 
 """
-    tofn(x) = typeof(fieldnames(x))
+    tofn(x) = x |> typeof |> fieldnames
 """
-tofn(x) = fieldnames(typeof(x))
+tofn(x) = x |> typeof |> fieldnames
 export tofn
 
 """

@@ -55,4 +55,19 @@ export ⊕
 tofn(x) = typeof(fieldnames(x))
 export tofn
 
+"""
+    moving_avg(v::AbstractVector, n)
+
+Iterate over `v`, computing the average of the current and 
+next n-1 (n total) elements, returning it as a vector.
+"""
+function moving_avg(v::AbstractVector, n)
+    output = Vector{Float64}(undef, length(v)-(n-1))
+    for i in eachindex(output)
+        output[i] = sum(v[i:i+(n-1)])/(n)
+    end
+    return output
+end
+export moving_avg
+
 end

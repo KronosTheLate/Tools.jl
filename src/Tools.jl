@@ -18,7 +18,7 @@ end
 export print_fields
 
 """
-    batch(v::AbstractVector, n_batches::Int, shuffle_pics=false; check_even=true, return_indices=false)
+    batch(v::AbstractVector, n_batches::Int, shuffle_input=false; check_even=true, return_indices=false)
 
 Create a vector of `n_batches` vectors, containing all of `v`.
 """

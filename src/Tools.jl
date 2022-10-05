@@ -50,12 +50,6 @@ Can be used as infix operator.
 export ⊕
 
 """
-    tofn(x) = x |> typeof |> fieldnames
-"""
-tofn(x) = x |> typeof |> fieldnames
-export tofn
-
-"""
     moving_avg(v::AbstractVector, n)
 
 Iterate over `v`, computing the average of the current and 

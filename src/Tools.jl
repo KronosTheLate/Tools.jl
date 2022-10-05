@@ -41,12 +41,12 @@ end
 export batch
 
 """
-    ⊕(args...) = 1/sum(x->1/x, args)
+    ⊕(args...) = inv(sum(inv, args))
 
 Compute the reciprocal of sum of reciprocal.
 Can be used as infix operator.
 """
-⊕(args...) = 1/sum(x->1/x, args)
+⊕(args...) = inv(sum(inv, args))
 export ⊕
 
 """

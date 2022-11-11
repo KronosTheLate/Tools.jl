@@ -42,13 +42,14 @@ end
 export batch
 
 """
-    ⊕(args...) = 1/sum(x->1/x, args)
+    ⊕(args...) = 1/sum(inv, args)
 
-Compute the reciprocal of sum of reciprocal.
+Compute the reciprocal of sum of reciprocals.
 Can be used as infix operator.
 """
-⊕(args...) = 1/sum(x->1/x, args)
+⊕(args...) = 1/sum(inv, args)
 export ⊕
+const ∥ = ⊕
 
 """
     moving_avg(v::AbstractVector, n)

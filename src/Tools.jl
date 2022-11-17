@@ -49,7 +49,9 @@ Can be used as infix operator.
 """
 ⊕(args...) = 1/sum(inv, args)
 export ⊕
+
 const ∥ = ⊕
+export ∥
 
 """
     moving_avg(v::AbstractVector, n)

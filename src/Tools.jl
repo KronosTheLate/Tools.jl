@@ -50,9 +50,6 @@ Can be used as infix operator.
 ⊕(args...) = 1/sum(inv, args)
 export ⊕
 
-const ∥ = ⊕
-export ∥
-
 """
     moving_avg(v::AbstractVector, n)
 
@@ -67,5 +64,39 @@ function moving_avg(v::AbstractVector, n)
     return output
 end
 export moving_avg
+
+"""
+    geothmetic_meandian(x)
+    geothmetic_meandian(x, maxiter=100)
+
+Compute the geothmetic meandian of `x`.
+Useful if you are not sure if the arithmic mean, 
+geometric mean, or median best describe the numbers in `x`.
+
+Keyword arguments `atol` and `rtol` are passed to `isapprox` 
+in order to check for convergence
+"""
+function geothmetic_meandian(x, maxiter::Integer=100; atol::Real=0, rtol::Real=atol>0 ? 0 : √eps())
+    if any(sign.(x) .== -1)
+        throw(ArgumentError("Negative value in input. This messes up geometric mean computation."))
+    end
+    F(x) = [mean(x), prod(x)^(1/length(x)), median(x)]
+    arith_geom_median = F(x)
+    if arith_geom_median[2] == 0
+        @warn "Geometric mean is 0 after first iteration.
+        It will stay zero and prevent convergence."
+    end
+    converged = false
+    counter = 0
+    while !converged
+        arith_geom_median = F(arith_geom_median) # update
+        proposed_return_value = median(F(arith_geom_median))
+        converged = all(isapprox.(arith_geom_median, proposed_return_value; atol, rtol))
+        converged && (@info "Converged after $counter iterations"; return proposed_return_value)
+        counter += 1
+        counter ≥ maxiter && (@info "Reached maxiter ($maxiter). Terminating"; return proposed_return_value)
+    end
+end
+export geothmetic_meandian
 
 end
